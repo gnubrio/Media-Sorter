@@ -14,16 +14,16 @@ class App(tk.Tk):
         style = ttk.Style()
         style.theme_use("clam")
 
-        self.SUPPORTED_FILES = (
+        self.SUPPORTED_IMAGES = (
             ".jpg",
             ".jpeg",
             ".png",
             ".bmp",
             ".svg",
             ".heic",
-            ".mp4",
-            ".mov",
         )
+        self.SUPPORTED_VIDEOS = (".mp4", ".mov")
+
         self.media_files = []
         self.current_media_index = 0
         self.destination_paths = []
@@ -88,7 +88,9 @@ class App(tk.Tk):
         if os.path.isdir(directory):
             for root_directory, sub_directories, files in os.walk(directory):
                 for file in files:
-                    if file.lower().endswith(self.SUPPORTED_FILES):
+                    if file.lower().endswith(
+                        self.SUPPORTED_IMAGES and self.SUPPORTED_VIDEOS
+                    ):
                         file_path = os.path.join(root_directory, file)
                         self.media_files.append(file_path)
 
@@ -99,27 +101,18 @@ class App(tk.Tk):
         media = self.media_files[self.current_media_index]
         max_height = 400
 
-        if media.lower().endswith(
-            (
-                ".jpg",
-                ".jpeg",
-                ".png",
-                ".bmp",
-                ".svg",
-                ".heic",
-            )
-        ):
+        if media.lower().endswith(self.SUPPORTED_IMAGES):
             pillow_heif.register_heif_opener()
             img = Image.open(media)
             img.thumbnail((10000, max_height))
             self.img_tk = ImageTk.PhotoImage(image=img)
 
-        elif media.lower().endswith((".mp4", ".mov")):
+        elif media.lower().endswith(self.SUPPORTED_VIDEOS):
             video = cv2.VideoCapture(media)
             ret, frame = video.read()
             video.release()
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            
+
             height, width, _ = frame_rgb.shape
             aspect_ratio = width / height
             new_height = min(max_height, height)
@@ -138,7 +131,7 @@ class App(tk.Tk):
             self.current_media_index -= 1
             self.display_media()
         else:
-            print("Error changing media")
+            return
 
     def move_media(self, index):
         if len(self.media_files) > 0:
