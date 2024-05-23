@@ -169,6 +169,7 @@ class App(tk.Tk):
             else:
                 print(f"{directory} already loaded")
 
+        self.destination_paths.sort()
         if len(self.destination_paths) != 0:
             self.create_directory_buttons()
 
