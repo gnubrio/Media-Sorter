@@ -10,7 +10,7 @@ class App(tk.Tk):
     def __init__(self):
         # Application parameters
         super().__init__()
-        self.title("Image Sorter")
+        self.title("Media Sorter")
         self.minsize(600, 600)
         style = ttk.Style()
         style.theme_use("clam")
@@ -174,26 +174,27 @@ class App(tk.Tk):
         # Add subdirectories if possible, if not add selected directory
         directory = filedialog.askdirectory(title="Select Folder")
 
-        # Search for sub directories
-        if any(
-            os.path.isdir(os.path.join(directory, content))
-            for content in os.listdir(directory)
-        ):
-            # Add subdirectories
-            for content in os.listdir(directory):
-                content_path = os.path.join(directory, content)
-                if os.path.isdir(content_path):
-                    path = os.path.join(directory, content_path)
-                    if path not in self.destination_paths:
-                        self.destination_paths.append(path)
-                    else:
-                        print(f"{content} already loaded")
-        # Add selected directory if not subdirectories
-        else:
-            if directory not in self.destination_paths:
-                self.destination_paths.append(directory)
+        if directory:
+            # Search for sub directories
+            if any(
+                os.path.isdir(os.path.join(directory, content))
+                for content in os.listdir(directory)
+            ):
+                # Add subdirectories
+                for content in os.listdir(directory):
+                    content_path = os.path.join(directory, content)
+                    if os.path.isdir(content_path):
+                        path = os.path.join(directory, content_path)
+                        if path not in self.destination_paths:
+                            self.destination_paths.append(path)
+                        else:
+                            print(f"{content} already loaded")
+            # Add selected directory if not subdirectories
             else:
-                print(f"{directory} already loaded")
+                if directory not in self.destination_paths:
+                    self.destination_paths.append(directory)
+                else:
+                    print(f"{directory} already loaded")
 
         # Create buttons for directories
         if len(self.destination_paths) != 0:
