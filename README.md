@@ -1,6 +1,6 @@
-Image Sorter
+Media Sorter
 
-The Image Sorter is a Python application built using the Tkinter library, designed to help users organize their image and video files into designated folders. It allows users to load images and videos from a selected directory, display them one by one, and move them to predefined destination folders.
+This Media Sorter is a Python application built using the Tkinter library, designed to help users organize their image and video files into designated folders. It allows users to load images and videos from a selected directory, display them one by one, and move them to predefined destination folders.
 Features:
 
     Load Images: Users can select a folder containing image and video files to load into the application.
@@ -15,7 +15,7 @@ Features:
 
 The application supports the following file formats:
 
-    Images: .jpg, .jpeg, .png, .bmp, .svg, .heic
+    Images: .jpg, .jpeg, .png, .bmp, .heic
     Videos: .mp4, .mov
 
 How to Use:

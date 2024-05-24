@@ -20,7 +20,6 @@ class App(tk.Tk):
             ".jpeg",
             ".png",
             ".bmp",
-            ".svg",
             ".heic",
         )
         self.SUPPORTED_VIDEOS = (".mp4", ".mov")
