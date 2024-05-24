@@ -41,10 +41,13 @@ class App(tk.Tk):
         self.media_display_label = ttk.Label(media_display_frame, image=None)
         self.media_display_label.pack()
 
+        self.media_remaining_label = ttk.Label(media_display_frame, text=None)
+        self.media_remaining_label.pack(side=tk.RIGHT)
+
         # Menu widgets
         menu_button_frame = ttk.Frame(self, border=2, relief=tk.SOLID)
         menu_button_frame.place(relx=0.9, y=0, relwidth=0.1, relheight=1)
-        
+
         menu_button_frame.rowconfigure((0, 1, 2, 3, 4), weight=1)
         menu_button_frame.columnconfigure(0, weight=1)
 
@@ -84,7 +87,7 @@ class App(tk.Tk):
         self.directory_button_frame.place(x=0, rely=0.4, relwidth=0.9, relheight=0.6)
 
     def load_media(self):
-        # Reset media files        
+        # Reset media files
         self.media_files = []
         self.current_media_index = 0
 
@@ -103,8 +106,10 @@ class App(tk.Tk):
         self.display_media()
 
     def display_media(self):
-        # Repack media label and find current index
+        # Repack media labels and find current index
         self.media_display_label.pack()
+        self.media_remaining_label.config(text=f"Remaining: {len(self.media_files)}")
+        self.media_remaining_label.pack()
         media = self.media_files[self.current_media_index]
         max_height = 400
 
@@ -199,7 +204,9 @@ class App(tk.Tk):
         row_count = (button_count + max_columns - 1) // max_columns
 
         # Sort basename of directories
-        directory_names = [(os.path.basename(path), i) for i, path in enumerate(self.destination_paths)]
+        directory_names = [
+            (os.path.basename(path), i) for i, path in enumerate(self.destination_paths)
+        ]
         sorted_directories = sorted(directory_names, key=lambda x: x[0].lower())
 
         # Create buttons
