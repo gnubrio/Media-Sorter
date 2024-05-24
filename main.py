@@ -8,6 +8,7 @@ import cv2
 
 class App(tk.Tk):
     def __init__(self):
+        # Application parameters
         super().__init__()
         self.title("Image Sorter")
         self.minsize(600, 600)
@@ -24,6 +25,7 @@ class App(tk.Tk):
         )
         self.SUPPORTED_VIDEOS = (".mp4", ".mov")
 
+        # Media files and directory paths/buttons storage
         self.media_files = []
         self.current_media_index = 0
         self.destination_paths = []
