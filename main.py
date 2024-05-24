@@ -143,6 +143,8 @@ class App(tk.Tk):
 
             if len(self.media_files) == 0:
                 self.media_display_label.pack_forget()
+            elif self.current_media_index == len(self.media_files):
+                self.change_media("previous")
             else:
                 self.display_media()
         else:
@@ -177,13 +179,14 @@ class App(tk.Tk):
         button_count = len(self.destination_paths)
         row_count = (button_count + max_columns - 1) // max_columns
 
-        for i, path in enumerate(self.destination_paths):
-            directory_name = os.path.basename(path)
+        directory_names = [(os.path.basename(path), i) for i, path in enumerate(self.destination_paths)]
+        sorted_directories = sorted(directory_names, key=lambda x: x[0].lower())
 
+        for i, (directory_name, index) in enumerate(sorted_directories):
             directory_button = ttk.Button(
                 self.directory_button_frame,
                 text=directory_name,
-                command=lambda index=i: self.move_media(index),
+                command=lambda idx=index: self.move_media(idx),
             )
             directory_button.grid(
                 row=i // max_columns,
