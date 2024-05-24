@@ -52,4 +52,4 @@ Installation:
 
 Run the Python script:
 
-    $python image_sorter.py
+    $python main.py
