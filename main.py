@@ -89,7 +89,7 @@ class App(tk.Tk):
             for root_directory, sub_directories, files in os.walk(directory):
                 for file in files:
                     if file.lower().endswith(
-                        self.SUPPORTED_IMAGES and self.SUPPORTED_VIDEOS
+                        (self.SUPPORTED_IMAGES + self.SUPPORTED_VIDEOS)
                     ):
                         file_path = os.path.join(root_directory, file)
                         self.media_files.append(file_path)
@@ -169,7 +169,6 @@ class App(tk.Tk):
             else:
                 print(f"{directory} already loaded")
 
-        self.destination_paths.sort()
         if len(self.destination_paths) != 0:
             self.create_directory_buttons()
 
